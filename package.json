@@ -1,0 +1,51 @@
+{
+  "name": "@ferquo/packup",
+  "version": "0.1.0",
+  "description": "PackUp – a terminal UI for keeping global and local npm packages up to date.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "packup": "bin/packup"
+  },
+  "scripts": {
+    "start": "node ./scripts/run-with-bun.mjs",
+    "dev": "node ./scripts/run-with-bun.mjs --local",
+    "lint": "echo \"Linting not configured\""
+  },
+  "keywords": [
+    "tui",
+    "npm",
+    "packages",
+    "update",
+    "opentui"
+  ],
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "scripts"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "dependencies": {
+    "@opentui/core": "^0.1.27",
+    "@opentui/react": "^0.1.27",
+    "react": "^19.2.0",
+    "react-reconciler": "^0.33.0",
+    "scheduler": "^0.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "@types/react": "^19.2.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,84 @@
+#!/usr/bin/env node
+
+import { spawn, spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve, join, sep } from 'node:path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const runtime = resolveBun();
+
+if (!runtime) {
+  const bunHome = process.env.BUN_INSTALL ?? join(homedir(), '.bun');
+  console.error('PackUp requires the Bun runtime (https://bun.sh).');
+  console.error('Install Bun and ensure it is discoverable on your PATH, or set PACKUP_BUN to the bun executable.');
+  console.error(`Default lookup includes: ${join(bunHome, 'bin', bunExecutableName())}`);
+  process.exit(1);
+}
+
+const distEntry = resolve(__dirname, '../dist/index.js');
+const args = ['run', distEntry, ...process.argv.slice(2)];
+
+const child = spawn(runtime, args, { stdio: 'inherit', env: process.env });
+
+child.on('error', (err) => {
+  console.error(err);
+  process.exit(1);
+});
+
+child.on('exit', (code, signal) => {
+  if (signal) {
+    process.kill(process.pid, signal);
+  } else {
+    process.exit(code ?? 0);
+  }
+});
+
+function resolveBun() {
+  const candidates = new Set();
+  const explicit = process.env.PACKUP_BUN?.trim();
+  if (explicit) {
+    collectCandidates(candidates, explicit);
+  }
+  collectCandidates(candidates, 'bun');
+  collectCandidates(candidates, bunExecutableName());
+  const bunHome = process.env.BUN_INSTALL ?? join(homedir(), '.bun');
+  collectCandidates(candidates, join(bunHome, 'bin', bunExecutableName()));
+
+  for (const candidate of candidates) {
+    if (!candidate) {
+      continue;
+    }
+    if (!candidate.includes(sep) && candidate === bunExecutableName()) {
+      const check = spawnSync(candidate, ['--version'], { stdio: 'ignore' });
+      if (!check.error) {
+        return candidate;
+      }
+      continue;
+    }
+    if (existsSync(candidate)) {
+      return candidate;
+    }
+    const check = spawnSync(candidate, ['--version'], { stdio: 'ignore' });
+    if (!check.error) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
+function collectCandidates(set, candidate) {
+  if (!candidate) {
+    return;
+  }
+  set.add(candidate);
+  if (process.platform === 'win32' && !candidate.endsWith('.exe')) {
+    set.add(`${candidate}.exe`);
+  }
+}
+
+function bunExecutableName() {
+  return process.platform === 'win32' ? 'bun.exe' : 'bun';
+}
