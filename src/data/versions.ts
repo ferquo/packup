@@ -45,7 +45,9 @@ async function getNodeLatestLTS(): Promise<string | undefined> {
     if (!entries || entries.length === 0) {
       return undefined;
     }
-    const latestLts = entries.find((entry) => entry.lts && entry.lts !== false);
+    const latestLts = entries.find(
+      (entry) => entry.lts !== null && entry.lts !== undefined && entry.lts !== false,
+    );
     if (!latestLts) {
       return undefined;
     }

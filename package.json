@@ -12,7 +12,9 @@
   "scripts": {
     "start": "node ./scripts/run-with-bun.mjs",
     "dev": "node ./scripts/run-with-bun.mjs --local",
-    "lint": "echo \"Linting not configured\""
+    "lint": "echo \"Linting not configured\"",
+    "build": "tsc --project tsconfig.json",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "tui",
