@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 
 import type { PackageRow } from '../data/types.js';
+import { Box, Text } from './primitives.js';
 
 type PackagesTableProps = {
   rows: PackageRow[];
@@ -38,7 +39,7 @@ export const PackagesTable: FC<PackagesTableProps> = ({
   const layout = getColumnLayout(widths);
 
   return (
-    <box
+    <Box
       style={{
         border: true,
         borderColor: '#3a3a3a',
@@ -49,18 +50,18 @@ export const PackagesTable: FC<PackagesTableProps> = ({
     >
       {renderHeader(layout)}
       {errors.map((error) => (
-        <text key={error} fg="#ff6666" wrap={false}>
+        <Text key={error} fg="#ff6666" wrap={false}>
           ! {error}
-        </text>
+        </Text>
       ))}
       {loading ? (
-        <text fg="#44d9a6" wrap={false}>
+        <Text fg="#44d9a6" wrap={false}>
           ⏳ Loading package data…
-        </text>
+        </Text>
       ) : rows.length === 0 ? (
-        <text fg="#555555" wrap>
+        <Text fg="#555555" wrap>
           {emptyMessage}
-        </text>
+        </Text>
       ) : (
         rows.map((row, index) => (
           <TableRow
@@ -72,7 +73,7 @@ export const PackagesTable: FC<PackagesTableProps> = ({
           />
         ))
       )}
-    </box>
+    </Box>
   );
 };
 
@@ -125,14 +126,14 @@ function getColumnLayout(widths: ColumnWidths): ColumnLayout {
 
 function renderHeader(layout: ColumnLayout) {
   return (
-    <box style={{ flexDirection: 'row', gap: 2, marginBottom: 1 }}>
+    <Box style={{ flexDirection: 'row', gap: 2, marginBottom: 1 }}>
       <HeaderCell width={layout.cursor} value="" />
       <HeaderCell width={layout.select} value={headerLabels.select} align="center" />
       <HeaderCell width={layout.name} value={headerLabels.package} />
       <HeaderCell width={layout.installed} value={headerLabels.installed} />
       <HeaderCell width={layout.latest} value={headerLabels.latest} />
       <HeaderCell width={layout.action} value={headerLabels.action} />
-    </box>
+    </Box>
   );
 }
 
@@ -154,28 +155,28 @@ const TableRow: FC<TableRowProps> = ({ row, active, readOnly, layout }) => {
   const lines = [];
   for (let i = 0; i < lineCount; i += 1) {
     lines.push(
-      <box key={`${row.name}-line-${i}`} style={{ flexDirection: 'row', gap: 2 }}>
+      <Box key={`${row.name}-line-${i}`} style={{ flexDirection: 'row', gap: 2 }}>
         <Cell width={layout.cursor} value={i === 0 && active ? '›' : ''} color={color} />
         <Cell width={layout.select} value={i === 0 && row.selected ? '[x]' : i === 0 ? '[ ]' : ''} color={color} />
         <Cell width={layout.name} value={nameLines[i] ?? ''} color={color} />
         <Cell width={layout.installed} value={installedLines[i] ?? ''} color={color} />
         <Cell width={layout.latest} value={latestLines[i] ?? ''} color={color} />
         <Cell width={layout.action} value={actionLines[i] ?? ''} color={color} />
-      </box>,
+      </Box>,
     );
   }
 
   return (
-    <box style={{ flexDirection: 'column', gap: 0 }}>
+    <Box style={{ flexDirection: 'column', gap: 0 }}>
       {lines}
       {row.statusMessage ? (
-        <box style={{ flexDirection: 'row', marginLeft: layout.cursor + layout.select + 2 }}>
-          <text fg="#777777" wrap={false}>
+        <Box style={{ flexDirection: 'row', marginLeft: layout.cursor + layout.select + 2 }}>
+          <Text fg="#777777" wrap={false}>
             • {truncate(row.statusMessage, layout.name + layout.installed + layout.latest + layout.action)}
-          </text>
-        </box>
+          </Text>
+        </Box>
       ) : null}
-    </box>
+    </Box>
   );
 };
 
@@ -188,7 +189,7 @@ type HeaderCellProps = {
 const HeaderCell: FC<HeaderCellProps> = ({ width, value, align = 'left' }) => {
   const alignment = align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start';
   return (
-    <box
+    <Box
       style={{
         width,
         flexDirection: 'row',
@@ -197,10 +198,10 @@ const HeaderCell: FC<HeaderCellProps> = ({ width, value, align = 'left' }) => {
         flexShrink: 0,
       }}
     >
-      <text fg="#888888" wrap={false}>
+      <Text fg="#888888" wrap={false}>
         {truncate(value, width) || ' '}
-      </text>
-    </box>
+      </Text>
+    </Box>
   );
 };
 
@@ -212,11 +213,11 @@ type CellProps = {
 
 const Cell: FC<CellProps> = ({ width, value, color }) => {
   return (
-    <box style={{ width, flexDirection: 'row', flexGrow: 0, flexShrink: 0 }}>
-      <text fg={color} wrap={false}>
+    <Box style={{ width, flexDirection: 'row', flexGrow: 0, flexShrink: 0 }}>
+      <Text fg={color} wrap={false}>
         {value || ' '}
-      </text>
-    </box>
+      </Text>
+    </Box>
   );
 };
 

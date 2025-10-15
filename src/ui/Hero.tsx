@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 
 import type { Mode, Versions } from '../data/types.js';
+import { Box, Text } from './primitives.js';
 import { VersionPill } from './VersionPill.js';
 
 type HeroProps = {
@@ -14,7 +15,7 @@ const accentSecondary = '#5ab3ff';
 
 export const Hero: FC<HeroProps> = ({ versions, mode, readOnly = false }) => {
   return (
-    <box
+    <Box
       style={{
         border: true,
         borderColor: accentPrimary,
@@ -25,15 +26,15 @@ export const Hero: FC<HeroProps> = ({ versions, mode, readOnly = false }) => {
         minHeight: 10,
       }}
     >
-      <box style={{ flexDirection: 'column', gap: 1 }}>
-        <text fg={accentPrimary} wrap attributes={1}>
+      <Box style={{ flexDirection: 'column', gap: 1 }}>
+        <Text fg={accentPrimary} wrap attributes={1}>
           PackUp
-        </text>
-        <text fg="#aaaaaa" wrap>
+        </Text>
+        <Text fg="#aaaaaa" wrap>
           Keep your global and local npm packages in sync without leaving the terminal.
-        </text>
-      </box>
-      <box style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}>
+        </Text>
+      </Box>
+      <Box style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}>
         <VersionPill
           label="Node"
           current={versions?.nodeCurrent ?? '?'}
@@ -46,7 +47,7 @@ export const Hero: FC<HeroProps> = ({ versions, mode, readOnly = false }) => {
           lts={versions?.npmLTS}
           accent={accentSecondary}
         />
-      </box>
-    </box>
+      </Box>
+    </Box>
   );
 };

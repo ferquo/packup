@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { Box, Text } from './primitives.js';
 
 type LogPanelProps = {
   lines: string[];
@@ -10,7 +11,7 @@ const DEFAULT_LINES = 20;
 export const LogPanel: FC<LogPanelProps> = ({ lines, title = 'Recent activity' }) => {
   const latestLines = lines.slice(-DEFAULT_LINES);
   return (
-    <box
+    <Box
       style={{
         border: true,
         borderColor: '#3a3a3a',
@@ -21,22 +22,22 @@ export const LogPanel: FC<LogPanelProps> = ({ lines, title = 'Recent activity' }
         overflow: 'hidden',
       }}
     >
-      <text fg="#888888" wrap={false}>
+      <Text fg="#888888" wrap={false}>
         {title}
-      </text>
-      <box style={{ flexDirection: 'column', gap: 0 }}>
+      </Text>
+      <Box style={{ flexDirection: 'column', gap: 0 }}>
         {latestLines.length === 0 ? (
-          <text fg="#555555" wrap={false}>
+          <Text fg="#555555" wrap={false}>
             Waiting for commands…
-          </text>
+          </Text>
         ) : (
           latestLines.map((line, index) => (
-            <text key={`${index}-${line}`} wrap>
+            <Text key={`${index}-${line}`} wrap>
               {line}
-            </text>
+            </Text>
           ))
         )}
-      </box>
-    </box>
+      </Box>
+    </Box>
   );
 };

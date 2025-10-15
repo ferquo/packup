@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 
 import type { Mode } from '../data/types.js';
+import { Box, Text } from './primitives.js';
 
 type ToolbarProps = {
   mode: Mode;
@@ -18,36 +19,36 @@ export const Toolbar: FC<ToolbarProps> = ({
   onModeChange,
 }) => {
   return (
-    <box
+    <Box
       style={{
         flexDirection: 'column',
         gap: 1,
         marginBottom: 1,
       }}
     >
-      <box style={{ flexDirection: 'row', gap: 1, alignItems: 'center', justifyContent: 'space-between' }}>
-        <box style={{ flexDirection: 'row', gap: 1, alignItems: 'center' }}>
-          <text fg="#888888" wrap={false}>
+      <Box style={{ flexDirection: 'row', gap: 1, alignItems: 'center', justifyContent: 'space-between' }}>
+        <Box style={{ flexDirection: 'row', gap: 1, alignItems: 'center' }}>
+          <Text fg="#888888" wrap={false}>
             Mode:
-          </text>
+          </Text>
           {renderModeChip('global', 'G', mode, onModeChange)}
           {renderModeChip('local', 'L', mode, onModeChange)}
           {renderModeChip('all', 'A', mode, onModeChange)}
-        </box>
-        <box style={{ flexDirection: 'row', gap: 1 }}>
+        </Box>
+        <Box style={{ flexDirection: 'row', gap: 1 }}>
           {readOnly ? (
-            <text fg="#ff9f43" wrap={false}>
+            <Text fg="#ff9f43" wrap={false}>
               Read-only
-            </text>
+            </Text>
           ) : null}
           {busy ? (
-            <text fg={accentPrimary} wrap={false}>
+            <Text fg={accentPrimary} wrap={false}>
               Working…
-            </text>
+            </Text>
           ) : null}
-        </box>
-      </box>
-    </box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
@@ -62,7 +63,7 @@ const ToolbarButton: FC<ToolbarButtonProps> = ({ label, disabled = false, onPres
   const fg = disabled ? '#555555' : primary ? accentPrimary : '#ffffff';
 
   return (
-    <box
+    <Box
       style={{
         border: true,
         borderColor: fg,
@@ -72,10 +73,10 @@ const ToolbarButton: FC<ToolbarButtonProps> = ({ label, disabled = false, onPres
         paddingBottom: 0,
       }}
     >
-      <text fg={fg} wrap={false}>
+      <Text fg={fg} wrap={false}>
         {label}
-      </text>
-    </box>
+      </Text>
+    </Box>
   );
 };
 
@@ -90,7 +91,7 @@ function renderModeChip(
   const borderColor = selected ? accentPrimary : '#444444';
 
   return (
-    <box
+    <Box
       key={target}
       style={{
         border: true,
@@ -101,10 +102,10 @@ function renderModeChip(
         paddingBottom: 0,
       }}
     >
-      <text fg={fg} wrap={false}>
+      <Text fg={fg} wrap={false}>
         ({keyHint}) {capitalize(target)}
-      </text>
-    </box>
+      </Text>
+    </Box>
   );
 }
 

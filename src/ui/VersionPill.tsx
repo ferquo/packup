@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { Box, Text } from './primitives.js';
 
 export type VersionPillProps = {
   label: string;
@@ -17,7 +18,7 @@ export const VersionPill: FC<VersionPillProps> = ({
 }) => {
   const ltsText = lts ? ` (LTS ${lts})` : '';
   return (
-    <box
+    <Box
       style={{
         border: true,
         borderColor: accent,
@@ -32,13 +33,13 @@ export const VersionPill: FC<VersionPillProps> = ({
         gap: 1,
       }}
     >
-      <text fg={accent} wrap={false}>
+      <Text fg={accent} wrap={false}>
         {label}:
-      </text>
-      <text wrap={false}>
+      </Text>
+      <Text wrap={false}>
         {current}
         {ltsText}
-      </text>
-    </box>
+      </Text>
+    </Box>
   );
 };

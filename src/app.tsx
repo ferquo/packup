@@ -10,6 +10,7 @@ import { Hero } from './ui/Hero.js';
 import { LogPanel } from './ui/LogPanel.js';
 import { PackagesTable } from './ui/PackagesTable.js';
 import { Toolbar } from './ui/Toolbar.js';
+import { Box, Text } from './ui/primitives.js';
 
 type ModeData = {
   rows: PackageRow[];
@@ -465,11 +466,11 @@ export const App = ({ initialMode, cwd, readOnly = false }: AppProps) => {
   });
 
   return (
-    <box style={{ flexDirection: 'column', gap: 1, padding: 1 }}>
+    <Box style={{ flexDirection: 'column', gap: 1, padding: 1 }}>
       <Hero versions={versions} mode={mode} readOnly={readOnly} />
-      <text fg={ACCENT} wrap={false}>
+      <Text fg={ACCENT} wrap={false}>
         {statusMessage}
-      </text>
+      </Text>
       <Toolbar mode={mode} readOnly={readOnly} busy={busy} onModeChange={setMode} />
       <PackagesTable
         rows={rows}
@@ -492,7 +493,7 @@ export const App = ({ initialMode, cwd, readOnly = false }: AppProps) => {
       />
       <Footer readOnly={readOnly} />
       <LogPanel lines={logLines} />
-    </box>
+    </Box>
   );
 };
 
@@ -501,7 +502,7 @@ type FooterProps = {
 };
 
 const Footer = ({ readOnly }: FooterProps) => (
-  <box
+  <Box
     style={{
       flexDirection: 'row',
       gap: 1,
@@ -511,17 +512,17 @@ const Footer = ({ readOnly }: FooterProps) => (
       padding: 1,
     }}
   >
-    <text fg="#888888" wrap>
+    <Text fg="#888888" wrap>
       Keyboard: ↑/↓ move • space select • enter update focused • U update selected • Shift+U update all • G/L/A switch mode • S select all • C clear • N update npm • Q quit
-    </text>
+    </Text>
     {readOnly ? (
-      <text fg="#ff9f43" wrap={false}>
+      <Text fg="#ff9f43" wrap={false}>
         Updates disabled in read-only mode.
-      </text>
+      </Text>
     ) : (
-      <text fg="#5ab3ff" wrap>
+      <Text fg="#5ab3ff" wrap>
         Press N to update the global npm CLI (runs npm install -g npm@latest).
-      </text>
+      </Text>
     )}
-  </box>
+  </Box>
 );
