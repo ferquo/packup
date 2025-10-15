@@ -24,16 +24,16 @@ export const Toolbar: FC<ToolbarProps> = ({
         flexDirection: 'column',
         gap: 1,
         marginBottom: 1,
+        alignItems: 'center',
       }}
     >
-      <Box style={{ flexDirection: 'row', gap: 1, alignItems: 'center', justifyContent: 'space-between' }}>
+      <Box style={{ flexDirection: 'row', gap: 2, alignItems: 'center', justifyContent: 'center' }}>
         <Box style={{ flexDirection: 'row', gap: 1, alignItems: 'center' }}>
           <Text fg="#888888" wrap={false}>
             Mode:
           </Text>
           {renderModeChip('global', 'G', mode, onModeChange)}
           {renderModeChip('local', 'L', mode, onModeChange)}
-          {renderModeChip('all', 'A', mode, onModeChange)}
         </Box>
         <Box style={{ flexDirection: 'row', gap: 1 }}>
           {readOnly ? (

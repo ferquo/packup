@@ -1,7 +1,8 @@
+import { measureText, type ASCIIFontName } from '@opentui/core';
 import type { FC } from 'react';
 
 import type { Mode, Versions } from '../data/types.js';
-import { Box, Text } from './primitives.js';
+import { AsciiFont, Box, Text } from './primitives.js';
 import { VersionPill } from './VersionPill.js';
 
 type HeroProps = {
@@ -9,6 +10,13 @@ type HeroProps = {
   mode: Mode;
   readOnly?: boolean;
 };
+
+const heroTitleText = 'PackUp';
+const heroFont: ASCIIFontName = 'block';
+const heroDimensions = measureText({
+  text: heroTitleText,
+  font: heroFont,
+});
 
 const accentPrimary = '#44d9a6';
 const accentSecondary = '#5ab3ff';
@@ -23,18 +31,21 @@ export const Hero: FC<HeroProps> = ({ versions, mode, readOnly = false }) => {
         flexDirection: 'column',
         gap: 1,
         marginBottom: 1,
-        minHeight: 10,
+        minHeight: 15,
+        alignItems: 'center',
       }}
     >
-      <Box style={{ flexDirection: 'column', gap: 1 }}>
-        <Text fg={accentPrimary} wrap attributes={1}>
-          PackUp
-        </Text>
-        <Text fg="#aaaaaa" wrap>
+      <Box style={{ flexDirection: 'column', gap: 1, alignItems: 'center' }}>
+        <AsciiFont
+          font={heroFont}
+          text={heroTitleText}
+          style={{ width: heroDimensions.width, height: heroDimensions.height }}
+        />
+        <Text fg="#aaaaaa" wrap style={{ textAlign: 'center' }}>
           Keep your global and local npm packages in sync without leaving the terminal.
         </Text>
       </Box>
-      <Box style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1 }}>
+      <Box style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
         <VersionPill
           label="Node"
           current={versions?.nodeCurrent ?? '?'}
