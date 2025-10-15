@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "PackUp – a terminal UI for keeping global and local npm packages up to date.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ferquo/packup"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
